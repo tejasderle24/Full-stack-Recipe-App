@@ -1,6 +1,5 @@
 import express from 'express'
 import 'dotenv/config'
-// import dotenv from 'dotenv'
 import { db } from './config/db.js';
 import { favoritesTable } from './db/schema.js';
 import { and, eq } from 'drizzle-orm';
@@ -9,7 +8,14 @@ import { and, eq } from 'drizzle-orm';
 const app = express();
 app.use(express.json());
 
+if (process.env.NODE_ENV === "production") job.start();
+
+
 const PORT = process.env.PORT || 5001
+
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ success: true });
+});
 
 app.get("/", (req, res) => {
     res.status(200).json("API is Working Sucessfully")
